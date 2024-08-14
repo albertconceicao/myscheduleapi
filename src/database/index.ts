@@ -1,17 +1,36 @@
-const { Client } = require('pg');
+import { run } from 'node:test';
 
-const client = new Client({
-	host: 'localhost',
-	port: 5432,
-	database: 'mycontacts',
-	user: 'root',
-	password: 'root',
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
+const username = encodeURIComponent('developeralbert');
+const password = encodeURIComponent('Gt@lph@2023');
+const uri = `mongodb+srv://${username}:${password}@myschedule.xutyw.mongodb.net/?retryWrites=true&w=majority&appName=MySchedule`;
+
+const client = new MongoClient(uri, {
+	serverApi: {
+		version: ServerApiVersion.v1,
+		strict: true,
+		deprecationErrors: true,
+	},
 });
 
-client.connect();
+export const Query = async function run(query: string, tableName: string) {
+	try {
+		await client.connect();
+		const database = client.db('sample_mflix');
+		const table = database.collection(tableName);
+		const query = {};
+		const options = {
+			limit: 10,
+		};
 
-export const Query = async (query: string, values?: string[]) => {
-	const { rows } = await client.query(query, values);
+		const cursor = table.find(query, options);
 
-	return rows;
+		await cursor.forEach((doc) => {
+			console.log(doc);
+		});
+	} finally {
+		await client.close();
+	}
 };
+run().catch(console.dir);
