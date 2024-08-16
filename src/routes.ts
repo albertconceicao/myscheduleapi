@@ -2,22 +2,14 @@
 
 import { Router } from 'express';
 
-import { CategoryController } from './app/controllers/CategoryController';
-import { ContactController } from './app/controllers/ContactController';
+import { CustomerController } from './app/controllers/CustomerController';
 
-const ContactControllerFunction = new ContactController();
-const CategoryControllerFunction = new CategoryController();
+const CustomerControllerFunction = new CustomerController();
 
 export const router = Router();
 
-router.get('/contacts', ContactControllerFunction.index);
-router.get('/contacts/:id', ContactControllerFunction.show);
-router.delete('/contacts/:id', ContactControllerFunction.delete);
-router.post('/contacts/', ContactControllerFunction.store);
-router.put('/contacts/:id', ContactControllerFunction.update);
-
-router.get('/categories', CategoryControllerFunction.index);
-router.get('/categories/:id', CategoryControllerFunction.show);
-router.post('/categories', CategoryControllerFunction.store);
-router.put('/categories/:id', CategoryControllerFunction.update);
-router.delete('/categories/:id', CategoryControllerFunction.delete);
+router.get('/customers', CustomerControllerFunction.index);
+router.get('/customers/:id', CustomerControllerFunction.show);
+router.delete('/customers/:id', CustomerControllerFunction.delete);
+router.post('/customers/', CustomerControllerFunction.store);
+router.put('/customers/:id', CustomerControllerFunction.update);

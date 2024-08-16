@@ -1,96 +1,95 @@
 // Connect with Repository
 
-import { ContactsRepository } from './repositories/ContactsRepository';
+import { CustomersRepository } from './repositories/CustomersRepository';
 
-const ContactsRepositoryFunction = new ContactsRepository();
+const CustomersRepositoryFunction = new CustomersRepository();
 
-export class ContactController {
+export class CustomerController {
 	async index(request: any, response: any) {
 		const { orderBy } = request.query;
-		const contacts = ContactsRepositoryFunction.findAll(orderBy);
+		const customers = await CustomersRepositoryFunction.findAll(orderBy);
 
-		response.json(contacts);
+		response.json(customers);
 	}
 
 	async show(request: any, response: any) {
 		// List a specific records
 		const { id } = request.params;
-		const contact = await ContactsRepositoryFunction.findById(id);
+		const customer = await CustomersRepositoryFunction.findById(id);
 
-		if (!contact) {
+		if (!customer) {
 			return response.status(404).json({ error: 'User not found' });
 		}
-		response.json(contact);
+		response.json(customer);
 	}
 
 	async store(request: any, response: any) {
 		// Create a new records
-		const { name, email, phone, category_id } = request.body;
+		const { name, email, phone } = request.body;
 
 		if (!name || !email) {
 			return response
 				.status(400)
 				.json({ error: 'Name and email are both required' });
 		}
-		const contactExists = await ContactsRepositoryFunction.findByEmail(email);
+		const customerExists = await CustomersRepositoryFunction.findByEmail(email);
 
-		if (contactExists) {
+		if (customerExists) {
 			return response
 				.status(400)
 				.json({ error: 'This email was already been taken!' });
 		}
-		const contact = await ContactsRepositoryFunction.create({
+		const customer = await CustomersRepositoryFunction.create({
 			name,
 			email,
 			phone,
-			category_id,
 		});
 
-		response.json(contact);
+		response.json(customer);
 	}
 
 	async update(request: any, response: any) {
 		// Update a specific records
 		const { id } = request.params;
-		const { name, email, phone, category_id } = request.body;
+		const { name, email, phone } = request.body;
 
-		const contactExists = await ContactsRepositoryFunction.findById(id);
+		const customerExists = await CustomersRepositoryFunction.findById(id);
 
-		if (!contactExists) {
-			return response.status(404).json({ error: 'Contact not found' });
+		if (!customerExists) {
+			return response.status(404).json({ error: 'customer not found' });
 		}
 		if (!name || !email) {
 			return response
 				.status(400)
 				.json({ error: 'Name and email are both required' });
 		}
-		const contactByEmail = await ContactsRepositoryFunction.findByEmail(email);
+		const customerByEmail =
+			await CustomersRepositoryFunction.findByEmail(email);
 
-		if (contactByEmail && contactByEmail.id !== id) {
+		if (customerByEmail && customerByEmail._id !== id) {
 			return response
 				.status(400)
 				.json({ error: 'This email was already been taken!' });
 		}
 
-		const contact = await ContactsRepositoryFunction.update(id, {
+		const customer = await CustomersRepositoryFunction.update(id, {
 			name,
 			email,
 			phone,
-			category_id,
 		});
 
-		response.json(contact);
+		response.json(customer);
 	}
 
 	async delete(request: any, response: any) {
 		// Delete a specific records
 		const { id } = request.params;
-		const contact = await ContactsRepositoryFunction.findById(id);
+		const customer = await CustomersRepositoryFunction.findById(id);
 
-		if (!contact) {
+		if (!customer) {
 			return response.status(404).json({ error: 'User not found' });
 		}
-		await ContactsRepositoryFunction.delete(id);
+		await CustomersRepositoryFunction.delete(id);
 		response.sendStatus(204);
 	}
 }
