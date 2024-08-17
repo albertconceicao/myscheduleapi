@@ -1,6 +1,6 @@
 // Connect with Repository
 
-import { CustomersRepository } from './repositories/CustomersRepository';
+import { CustomersRepository } from '../repositories/CustomersRepository';
 
 const CustomersRepositoryFunction = new CustomersRepository();
 

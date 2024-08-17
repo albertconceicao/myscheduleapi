@@ -1,7 +1,7 @@
 // Connect with Data Source
 import mongoose from 'mongoose';
 
-import '../../../database/Models/User';
+import '../../database/Models/User';
 
 const User = mongoose.model('customers');
 
