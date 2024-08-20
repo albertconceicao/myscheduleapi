@@ -10,6 +10,7 @@ interface ICustomer {
 	name: string;
 	email: string;
 	phone: string;
+	password?: string;
 }
 export class CustomersRepository {
 	async findAll(orderBy?: string) {
@@ -34,8 +35,8 @@ export class CustomersRepository {
 		return specifcUser;
 	}
 
-	async create({ name, email, phone }: ICustomer) {
-		const newUser = await User.create({ name, email, phone })
+	async create({ name, email, phone, password }: ICustomer) {
+		const newUser = await User.create({ name, email, phone, password })
 			.then((user) => user)
 			.catch((error) => console.log('Erro ao criar cliente', error));
 

@@ -1,15 +1,32 @@
 import mongoose, { Schema } from 'mongoose';
 
-const User: any = new Schema({
-	name: {
-		type: String,
-		required: true,
+const User: any = new Schema(
+	{
+		id: mongoose.Schema.Types.ObjectId,
+		name: {
+			type: String,
+			required: true,
+		},
+		email: {
+			type: String,
+			required: true,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+		phone: {
+			type: Number,
+			required: false,
+		},
+		created_at: {
+			type: Date,
+			default: new Date(),
+		},
 	},
-	email: {
-		type: String,
-		required: true,
+	{
+		timestamps: true,
 	},
-	phone: Number,
-});
+);
 
 mongoose.model('customers', User);

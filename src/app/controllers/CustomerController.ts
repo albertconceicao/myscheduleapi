@@ -1,4 +1,5 @@
 // Connect with Repository
+import bcrypt from 'bcrypt';
 
 import { CustomersRepository } from '../repositories/CustomersRepository';
 
@@ -25,7 +26,11 @@ export class CustomerController {
 
 	async store(request: any, response: any) {
 		// Create a new records
-		const { name, email, phone } = request.body;
+		const { name, email, phone, password } = request.body;
+
+		const hashedPassword = bcrypt.hashSync(password, 10);
+
+		request.body.password = hashedPassword;
 
 		if (!name || !email) {
 			return response
@@ -43,6 +48,7 @@ export class CustomerController {
 			name,
 			email,
 			phone,
+			password: hashedPassword,
 		});
 
 		response.json(customer);
@@ -91,5 +97,12 @@ export class CustomerController {
 		}
 		await CustomersRepositoryFunction.delete(id);
 		response.sendStatus(204);
+	}
+
+	async authenticatedRoute(request: any, response: any) {
+		response.json({
+			statusCode: 200,
+			message: 'Authenticated',
+		});
 	}
 }
