@@ -2,6 +2,7 @@
 import mongoose from 'mongoose';
 
 import '../../database/Models/User';
+import logger from '../utils/logger';
 
 const User = mongoose.model('customers');
 
@@ -38,7 +39,7 @@ export class CustomersRepository {
 	async create({ name, email, phone, password }: ICustomer) {
 		const newUser = await User.create({ name, email, phone, password })
 			.then((user) => user)
-			.catch((error) => console.log('Erro ao criar cliente', error));
+			.catch((error) => logger.error('Erro ao criar cliente', error));
 
 		return newUser;
 	}
@@ -52,7 +53,9 @@ export class CustomersRepository {
 				user
 					.save()
 					.then((responseUpdatedUser: string) => responseUpdatedUser)
-					.catch((err: Error) => console.log('Erro ao atualizar cliente', err));
+					.catch((error: Error) =>
+						logger.error('Erro ao atualizar cliente', error),
+					);
 			}
 		});
 
@@ -62,7 +65,7 @@ export class CustomersRepository {
 	async delete(id: string) {
 		const deletedUser = await User.findOneAndDelete({ _id: id })
 			.then((user) => user)
-			.catch((error) => console.log('Erro ao deletar cliente', error));
+			.catch((error) => logger.error('Erro ao deletar cliente', error));
 		return deletedUser;
 	}
 }
