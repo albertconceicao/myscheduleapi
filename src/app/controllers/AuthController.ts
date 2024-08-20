@@ -35,6 +35,9 @@ export class AuthController {
 		const token = jwt.sign(
 			{ name: customer.name, email: customer.email },
 			SECRET,
+			{
+				expiresIn: '30s',
+			},
 		);
 		response.json({
 			statusCode: 200,
@@ -46,8 +49,7 @@ export class AuthController {
 	}
 
 	async verifyToken(request: any, response: any, next: any) {
-		// eslint-disable-next-line prettier/prettier, dot-notation
-		const tokenHeader = request.headers['authorization'];
+		const tokenHeader = request.headers.authorization;
 		const token = tokenHeader && tokenHeader.split(' ')[1];
 
 		if (!token) {
@@ -57,16 +59,8 @@ export class AuthController {
 		}
 
 		try {
-			const decoded = jwt.verify(token, SECRET);
-			response.json({
-				statusCode: 200,
-				message: 'Token válido',
-				data: {
-					decoded,
-				},
-			});
+			jwt.verify(token, SECRET);
 			next();
-			console.log('Here');
 		} catch (error) {
 			response.status(401).json({
 				statusCode: 401,

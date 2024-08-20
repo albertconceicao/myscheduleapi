@@ -32,8 +32,6 @@ export class CustomerController {
 
 		request.body.password = hashedPassword;
 
-		console.log({ hashedPassword });
-
 		if (!name || !email) {
 			return response
 				.status(400)

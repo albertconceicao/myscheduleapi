@@ -10,7 +10,11 @@ const AuthControllerFunction = new AuthController();
 
 export const router = Router();
 
-router.get('/customers', CustomerControllerFunction.index);
+router.get(
+	'/customers',
+	AuthControllerFunction.verifyToken,
+	CustomerControllerFunction.index,
+);
 router.get('/customers/:id', CustomerControllerFunction.show);
 router.delete('/customers/:id', CustomerControllerFunction.delete);
 router.post('/customers/', CustomerControllerFunction.store);
@@ -20,5 +24,5 @@ router.post('/login', AuthControllerFunction.login);
 router.post(
 	'/authenticatedRoute',
 	AuthControllerFunction.verifyToken,
-	CustomerControllerFunction.authenticatedRoute,
+	CustomerControllerFunction.index,
 );
