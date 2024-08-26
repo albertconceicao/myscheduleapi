@@ -6,7 +6,9 @@
   "author": "Albert Conceição",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
+    "start": "STAGE=prd tsx --watch src/index.ts",
+    "dev": "STAGE=dev tsx --watch src/index.ts",
+    "dev:win": "set STAGE=dev && tsx --watch src/index.ts",
     "test:database": "tsx --watch src/database/schema.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
