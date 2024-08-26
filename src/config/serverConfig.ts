@@ -1,13 +1,14 @@
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import express from 'express';
 
 import 'express-async-errors';
 
 import { cors } from '../app/middlewares/cors';
-import logger from '../app/utils/logger';
-import databaseConfig from './database/databaseConfig';
 import { router } from '../app/routes/routes';
-import dotenv from 'dotenv';
+import logger from '../app/utils/logger';
+
+import databaseConfig from './database/databaseConfig';
 
 dotenv.config();
 
