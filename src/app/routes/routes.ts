@@ -2,8 +2,8 @@
 
 import { Router } from 'express';
 
-import { AuthController } from './app/controllers/AuthController';
-import { CustomerController } from './app/controllers/CustomerController';
+import { AuthController } from '../controllers/AuthController';
+import { CustomerController } from '../controllers/CustomerController';
 
 const CustomerControllerFunction = new CustomerController();
 const AuthControllerFunction = new AuthController();

@@ -1,8 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import '../../../dotenv.config';
-
 import { CustomersRepository } from '../repositories/CustomersRepository';
 
 const CustomersRepositoryFunction = new CustomersRepository();
