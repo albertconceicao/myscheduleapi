@@ -13,38 +13,30 @@ interface ICustomer {
 	phone: string;
 	password?: string;
 }
+
 export class CustomersRepository {
-	async findAll(orderBy?: string) {
+	// TODO: include the Type of return inside Promise returned from functions
+	async findAll(orderBy?: string): Promise<any> {
 		const direction = orderBy?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
 
-		const users = await User.find({})
-			.sort({ id: direction.toLowerCase() as any })
-			.then((userList) => userList);
-
-		return users;
+		return User.find({}).sort({ id: direction.toLowerCase() as any });
 	}
 
-	async findById(id: string) {
-		const specifcUser = await User.findOne({ _id: id }).then((user) => user);
-
-		return specifcUser;
+	async findById(id: string): Promise<any> {
+		return User.findOne({ _id: id });
 	}
 
-	async findByEmail(email: string) {
-		const specifcUser = await User.findOne({ email }).then((user) => user);
-
-		return specifcUser;
+	async findByEmail(email: string): Promise<any> {
+		return User.findOne({ email }).then((user) => user);
 	}
 
-	async create({ name, email, phone, password }: ICustomer) {
-		const newUser = await User.create({ name, email, phone, password })
-			.then((user) => user)
-			.catch((error) => logger.error('Erro ao criar cliente', error));
-
-		return newUser;
+	async create({ name, email, phone, password }: ICustomer): Promise<any> {
+		return User.create({ name, email, phone, password });
 	}
 
-	async update(id: string, { name, email, phone }: ICustomer) {
+	// TODO: remove the validation, and the two step database update (find and save) have to be implemented separately
+	// TODO: also delegates the error handling to controller
+	async update(id: string, { name, email, phone }: ICustomer): Promise<any> {
 		const updatedUser = await User.findOne({ _id: id }).then((user) => {
 			if (user) {
 				user.name = name;
@@ -62,10 +54,7 @@ export class CustomersRepository {
 		return updatedUser;
 	}
 
-	async delete(id: string) {
-		const deletedUser = await User.findOneAndDelete({ _id: id })
-			.then((user) => user)
-			.catch((error) => logger.error('Erro ao deletar cliente', error));
-		return deletedUser;
+	async delete(id: string): Promise<any> {
+		return User.findOneAndDelete({ _id: id });
 	}
 }
