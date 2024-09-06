@@ -1,0 +1,22 @@
+
+{
+    "summary": "Retrieve a list of customers",
+    "tags": ["customers"],
+    "parameters": [
+      {
+        "name": "orderBy",
+        "in": "query",
+        "description": "A param value that can be considered for filter",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "A successful response"
+      }
+    }
+  }
+

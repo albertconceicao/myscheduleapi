@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
 import kleur from 'kleur';
 import winston from 'winston';
+
+dotenv.config();
 
 function getLocalizedWeekday(locale: string) {
 	const options = { weekday: 'long' as const };
@@ -50,14 +53,16 @@ const customFormat = winston.format.printf(
 	},
 );
 
+const logLevel = process.env.LOG_LEVEL || 'info';
+
 const logger = winston.createLogger({
-	level: process.env.LOG_LEVEL || 'info',
+	level: logLevel,
 	format: winston.format.combine(
 		winston.format.timestamp({ format: 'DD MMM YYYY HH:mm:ss [GMT]' }),
 		customFormat,
 	),
 	transports:
-		process.env.LOG_LEVEL === 'debug'
+		logLevel === 'debug'
 			? [
 					new winston.transports.Console(),
 					new winston.transports.File({ filename: 'logs/combined.log' }),

@@ -1,0 +1,8 @@
+{
+    "get": {
+        "$ref": "./functions/getCustomers.json"
+    },
+    "post": {
+        "$ref": "./functions/postCustomer.json"
+    }
+}

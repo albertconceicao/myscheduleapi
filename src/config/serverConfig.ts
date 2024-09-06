@@ -9,12 +9,15 @@ import { router } from '../app/routes/routes';
 import logger from '../app/utils/logger';
 
 import databaseConfig from './database/databaseConfig';
+import { loadSwaggerUi } from './swagger.config';
 
 dotenv.config();
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+loadSwaggerUi(app);
 
 app.use(express.json());
 

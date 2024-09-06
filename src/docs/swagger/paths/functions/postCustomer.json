@@ -1,0 +1,27 @@
+{
+    "summary": "Create a new customer",
+    "tags": ["customers"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "Customer created successfully"
+      }
+    }
+}
