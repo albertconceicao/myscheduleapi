@@ -13,16 +13,16 @@ export const router = Router();
 router.get(
 	'/customers',
 	AuthControllerFunction.verifyToken,
-	CustomerControllerFunction.index,
+	CustomerControllerFunction.list,
 );
-router.get('/customers/:id', CustomerControllerFunction.show);
+router.get('/customers/:id', CustomerControllerFunction.find);
 router.delete('/customers/:id', CustomerControllerFunction.delete);
-router.post('/customers/', CustomerControllerFunction.store);
+router.post('/customers/', CustomerControllerFunction.create);
 router.put('/customers/:id', CustomerControllerFunction.update);
 
 router.post('/login', AuthControllerFunction.login);
 router.post(
 	'/authenticatedRoute',
 	AuthControllerFunction.verifyToken,
-	CustomerControllerFunction.index,
+	CustomerControllerFunction.list,
 );
