@@ -12,17 +12,17 @@ export const router = Router();
 
 router.get(
 	'/customers',
-	AuthControllerFunction.verifyToken,
+	// AuthControllerFunction.verifyToken,
 	CustomerControllerFunction.list,
 );
 router.get('/customers/:id', CustomerControllerFunction.find);
 router.delete('/customers/:id', CustomerControllerFunction.delete);
-router.post('/customers/', CustomerControllerFunction.create);
+router.post('/customers/', CustomerControllerFunction.createPatient);
 router.put('/customers/:id', CustomerControllerFunction.update);
 
 router.post('/login', AuthControllerFunction.login);
 router.post(
 	'/authenticatedRoute',
-	AuthControllerFunction.verifyToken,
+	// AuthControllerFunction.verifyToken,
 	CustomerControllerFunction.list,
 );

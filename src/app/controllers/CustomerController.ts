@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 
 import { CustomersRepository } from '../repositories/CustomersRepository';
 import {
+	customerNotFound,
+	emailAlreadyExists,
 	generalServerError,
 	mandatoryFieldsRequired,
-	emailAlreadyExists,
-	customerNotFound,
 } from '../utils/errors';
 import logger from '../utils/logger';
 import { StatusCode } from '../utils/statusCodes';
@@ -66,7 +66,7 @@ export class CustomerController {
 	 * @param req
 	 * @param res
 	 */
-	async create(req: Request, res: Response) {
+	async createPatient(req: Request, res: Response) {
 		logger.info('create >> Start');
 		// Create a new records
 		const { name, email, phone, password } = req.body;
@@ -92,7 +92,7 @@ export class CustomerController {
 				logger.debug('create :: Error :: Email :', email);
 				return res.status(StatusCode.BAD_REQUEST).json(emailAlreadyExists);
 			}
-			const customer = await CustomersRepositoryFunction.create({
+			const customer = await CustomersRepositoryFunction.createPatient({
 				name,
 				email,
 				phone,
@@ -115,8 +115,9 @@ export class CustomerController {
 		logger.info('update >> Start >>');
 		// Update a specific records
 		const { id } = req.params;
-		const { name, email, phone } = req.body;
+		const { name, email, phone, password } = req.body;
 
+		const hashedPassword = bcrypt.hashSync(password, 10);
 		try {
 			const customerExists = await CustomersRepositoryFunction.findById(id);
 			const requiredFields = verifyRequiredFields({ name, email });
@@ -136,7 +137,7 @@ export class CustomerController {
 			const customerByEmail =
 				await CustomersRepositoryFunction.findByEmail(email);
 
-			if (customerByEmail && customerByEmail._id !== id) {
+			if (customerByEmail && customerByEmail._id != id) {
 				logger.error('update :: Error :: ', emailAlreadyExists.message);
 				logger.debug('update :: Error :: Email :', email);
 				return res.status(StatusCode.BAD_REQUEST).json(emailAlreadyExists);
@@ -146,6 +147,7 @@ export class CustomerController {
 				name,
 				email,
 				phone,
+				password: hashedPassword,
 			});
 
 			logger.info('update << End <<');

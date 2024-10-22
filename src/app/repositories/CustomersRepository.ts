@@ -30,7 +30,12 @@ export class CustomersRepository {
 		return User.findOne({ email }).then((user) => user);
 	}
 
-	async create({ name, email, phone, password }: ICustomer): Promise<any> {
+	async createPatient({
+		name,
+		email,
+		phone,
+		password,
+	}: ICustomer): Promise<any> {
 		return User.create({ name, email, phone, password });
 	}
 

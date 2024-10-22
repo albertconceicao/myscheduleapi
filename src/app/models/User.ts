@@ -13,10 +13,10 @@ const User: any = new Schema(
 		},
 		password: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		phone: {
-			type: Number,
+			type: String,
 			required: false,
 		},
 		created_at: {

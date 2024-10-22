@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+import '../../../dotenv.config';
 import { CustomersRepository } from '../repositories/CustomersRepository';
 
 const CustomersRepositoryFunction = new CustomersRepository();
@@ -25,7 +26,7 @@ export class AuthController {
 		}
 
 		const validatedPassword = bcrypt.compareSync(password, customer.password);
-		console.log(validatedPassword);
+		console.log({ validatedPassword });
 
 		if (!validatedPassword) {
 			return response.status(401).json({
